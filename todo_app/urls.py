@@ -9,8 +9,8 @@ from .views import (
     UpdateTagView,
     DeleteTagView,
     AddTaskView,
-    toggle_task_status_view,
-    undo_task_view,
+    ToggleTaskStatusView,
+    UndoTaskView,
 )
 
 urlpatterns = [
@@ -26,10 +26,13 @@ urlpatterns = [
         DeleteTaskView.as_view(),
         name="delete-task"
     ),
-    path("undo-task/<int:pk>/", undo_task_view, name="undo-task"),
+    path("undo-task/<int:pk>/",
+         UndoTaskView.as_view(),
+         name="undo-task"
+         ),
     path(
         "toggle_task_status/<int:task_id>/",
-        toggle_task_status_view,
+        ToggleTaskStatusView.as_view(),
         name="toggle-task-status",
     ),
     path("tags/", TagListView.as_view(), name="tag-list"),

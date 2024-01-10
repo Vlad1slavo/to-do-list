@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Task, Tag
@@ -45,8 +47,9 @@ class DeleteTaskView(DeleteView):
     success_url = reverse_lazy("todo_list:index")
 
 
+@method_decorator(require_POST, name="dispatch")
 class UndoTaskView(View):
-    def get(self, request, pk):
+    def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.is_done = False
         task.save()

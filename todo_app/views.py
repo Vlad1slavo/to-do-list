@@ -56,8 +56,9 @@ class UndoTaskView(View):
         return redirect("todo_list:index")
 
 
+@method_decorator(require_POST, name="dispatch")
 class ToggleTaskStatusView(View):
-    def get(self, request, task_id):
+    def post(self, request, task_id):
         task = get_object_or_404(Task, pk=task_id)
         task.is_done = not task.is_done
         task.save()
